@@ -1,0 +1,43 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"""
+Int64 is a signed 64‐bit integer.
+GraphQL Int is a signed 32‐bit integer.
+"""
+scalar Int64
+
+"""
+Timestamp is a date and time.
+It is serialized as a String in RFC3339 date and time format.
+"""
+scalar Timestamp
+
+"""
+Decimal is a number where precision is important.
+"""
+scalar Decimal
+
+type Query {
+    """
+    version is just a sample field. Since it needs at least one field, put a version here.
+    """
+    version: String!
+}
+
+type Mutation {
+    """
+    setVersion is just a sample field. Since it needs at least one field, put a version here.
+    """
+    setVersion(input: String!): String!
+}
+
+
+# Information for paginating this connection
+type PageInfo {
+    startCursor: ID!
+    endCursor: ID!
+    hasNextPage: Boolean!
+}

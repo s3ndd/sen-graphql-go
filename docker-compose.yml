@@ -1,0 +1,19 @@
+version: '3.4'
+networks:
+  default:
+    driver: bridge
+
+services:
+  github.com/s3ndd/sen-graphql-go:
+    image: sen-graphql-go:master
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: github.com/s3ndd/sen-graphql-go
+    restart: always
+    ports:
+      - '60999:60000'
+    expose:
+      - '60000'
+    networks:
+      - default

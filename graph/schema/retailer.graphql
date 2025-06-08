@@ -1,0 +1,65 @@
+extend type Query {
+    """
+    retailer returns the retailer with the given id. It will return null if the retailer can cannot be found.
+    """
+    retailer(id: ID!): Retailer
+
+    """
+    retailers returns the list of retailers.
+    """
+    retailers: [Retailer!]!
+
+}
+type Retailer {
+    """
+    id is the unique identifier for the retailer.
+    """
+    id: ID!
+    """
+    name is the retailer's name.
+    """
+    name: String!
+    """
+    status is the status of the retailer.
+    """
+    status: RetailerStatus!
+    """
+    pdfURL is the url of the terms.
+    """
+    pdfURL: String!
+    """
+    sites is the list of sites belong to the retailer
+    """
+    sites: [Site!]!
+    """
+    created is when the retailer was created.
+    """
+    created: Timestamp!
+    """
+    updated is when the retailer was last updated.
+    """
+    updated: Timestamp!
+}
+
+enum RetailerStatus {
+    """
+    ActiveRetailerStatus indicates retailer is an active customer
+    """
+    ACTIVE
+    """
+    PREPILOT indicates retailer is a prepilot customer
+    """
+    PREPILOT
+    """
+    PILOT indicates retailer is a pilot customer
+    """
+    PILOT
+    """
+    DEMO indicates retailer is a demo customer
+    """
+    DEMO
+    """
+    TRIAL indicates retailer is a trial customer
+    """
+    TRIAL
+}

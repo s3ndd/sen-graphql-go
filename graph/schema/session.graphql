@@ -1,0 +1,115 @@
+extend type Query {
+    session(id: ID!, siteID: ID!, retailerID:ID!): Session
+    sessions(siteID: ID!, retailerID:ID!, status: [SessionStatus!]): SessionConnection!
+}
+
+extend type Mutation {
+    updateSessionStatus(input: UpdateSessionStatusRequest): Session!
+}
+
+type Session {
+    """
+    id is the unique identifier for the session.
+    """
+    id: ID!
+    """
+    cartID is the unique identifier for the cart associated with the session.
+    """
+    cartID: ID!
+    """
+    userID is the unique identifier for the user who created the session.
+    """
+    userID: ID
+    """
+    repeatUser indicates the session was created by a repeat user or a new user.
+    """
+    repeatUser: Boolean
+    """
+    retailerID is the unique identifier for the retailer.
+    """
+    retailerID: ID
+    """
+    siteID is the unique identifier for the site.
+    """
+    siteID: ID!
+    """
+    site is the detail of the site where the session belongs to.
+    """
+    site: Site!
+    """
+    status is the status of the session.
+    """
+    status: SessionStatus!
+    """
+    externalToken is the token from the third party.
+    """
+    externalToken: String
+    """
+    dealBarcode is the unique identifier generated to transfer the session to pos.
+    """
+    dealBarcode: String
+    """
+    total is the total price of the session.
+    """
+    total: Float!
+    """
+    totalSavings is the total saving of the session.
+    """
+    totalSavings: Float!
+    """
+    totalTax is the total tax information of the session.
+    """
+    totalTax: [Tax!]!
+    """
+    items is the final item list.
+    """
+    items: [Item!]!
+    """
+    itemsPrePos is the iteme pre handed over to the pos .
+    """
+    itemsPrePos: [Item!]!
+    """
+    alerts is the alerts triggered during the session.
+    """
+    alerts(status:[AlertStatus!], types: [AlertType!]): [Alert]!
+    """
+    events is the event list process for the session.
+    """
+    events(eventType: EventType, eventSubTypes: [EventSubType!]): [Event!]!
+    """
+    created is when the session was created.
+    """
+    created: Timestamp!
+    """
+    updated is when the session was last updated.
+    """
+    updated: Timestamp!
+}
+
+type Tax {
+    rate: Float!
+    amount: Float!
+}
+
+type SessionConnection {
+    sessions: [Session!]!
+}
+
+input UpdateSessionStatusRequest {
+    sessionID: ID!
+    retailerID: ID!
+    siteID: ID!
+    status: SessionStatus!
+}
+
+enum SessionStatus {
+    UNSPECIFIED
+    SHOPPING
+    PAUSED
+    HELD
+    PRECHECKOUT
+    CHECKOUT
+    PAID
+    FINISHED
+    CANCELLED
+}
