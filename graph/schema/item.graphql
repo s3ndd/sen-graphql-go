@@ -1,0 +1,74 @@
+extend type Query {
+    items(sessionID: ID!): [Item]!
+}
+
+type Item {
+    """
+    code is the unique identifier for the item.
+    """
+    code: String!
+    """
+    price is the price of the item.
+    """
+    price: Float!
+    """
+    weight is the weight of the item if the item is sold by weight.
+    """
+    weight: Float
+    """
+    savings is the savings of the item.
+    """
+    savings: Float!
+    """
+    quantity is the quantity of the item.
+    """
+    quantity:Int!
+    """
+    extraInfo is the extra information of the item.
+    """
+    extraInfo:String
+    """
+    restricted indicates whether the item is restricted or not.
+    """
+    restricted: Boolean!
+    """
+    description is the name of the item.
+    """
+    description:String!
+    """
+    productKey is the unique identifier for the item.
+    """
+    productKey: String!
+    """
+    totalPrice is the total price of the item.
+    """
+    totalPrice: Float!
+    """
+    priceWeight is the price of item by weight+.
+    """
+    priceWeight: Float
+    """
+    taxRate is the tax rate of the item.
+    """
+    taxRate: Float
+    """
+    discountType is the discount applied to the item. If there is no discount, it will be NONE.
+    """
+    discountType: String!
+    """
+    discount is the discount code applied to the item.
+    """
+    discount: String
+    """
+    internalKey is the internal unique identifier for the item.
+    """
+    internalKey: String!
+    """
+    bogoID is the id of bogo.
+    """
+    bogoID:Int
+    """
+    category denotes the item is a special item.
+    """
+    category: String
+}

@@ -1,0 +1,106 @@
+extend type Query {
+    alert(id: ID!): Alert
+    alerts(siteID:ID, sessionID: ID, cartID: ID, status:[AlertStatus!], types: [AlertType!]): AlertConnection
+}
+
+type Alert {
+    """
+    id is the unique identifier for the alert.
+    """
+    id: ID!
+    """
+    siteID is the unique identifier for the site where the alert belongs to.
+    """
+    siteID: ID!
+    """
+    cartID is the unique identifier for the cart where the alert belongs to.
+    """
+    cartID: ID!
+    """
+    cartQRCode is the unique identifier for the cart where the alert belongs to.
+    """
+    cartQRCode: ID!
+    """
+    sessionID is the unique identifier for the session where the alert belongs to.
+    """
+    sessionID: ID
+    """
+    session is the detail of the session which is associated with the cart.
+    """
+    session: Session
+    """
+    status is the status of the alert.
+    """
+    status: AlertStatus!
+    """
+    type is the type of the cart.
+    """
+    type: AlertType!
+    """
+    responder is unique identifier for the user who claimed the alert.
+    """
+    responder: String
+    """
+    message is the more information of the alert.
+    """
+    message: String
+    """
+    triggeredAt is the time when the alert is triggered.
+    """
+    triggeredAt: Timestamp
+    """
+    acknowledgedAt is the time when the alert is claimed.
+    """
+    acknowledgedAt: Timestamp
+    """
+    resolvedAt is the time when the alert is resolved.
+    """
+    resolvedAt: Timestamp
+    """
+    created is when the session was created.
+    """
+    created: Timestamp!
+    """
+    updated is when the session was last updated.
+    """
+    updated: Timestamp!
+    """
+    deleted indicates whether the cart has been removed or not.
+    """
+    deleted: Boolean!
+}
+
+type AlertConnection {
+    alerts: [Alert!]!
+}
+
+enum AlertType {
+    HELP
+    LATCH
+    POS_ERROR
+    MULTIPLE_ITEMS
+    MISSED_LABEL
+}
+
+enum AlertStatus {
+    """
+    OPEN is the initial status that means the alert has to be acknowledged, resolved or self solved.
+    """
+    OPEN
+    """
+    ACKNOWLEDGED is the status that means the alert has been claimed by staff.
+    """
+    ACKNOWLEDGED
+    """
+    RESOLVED is the final status that means the alert has been resolved.
+    """
+    RESOLVED
+    """
+    SELF_SOLVED is the final status that means the alert has been solved by the user.
+    """
+    SELF_SOLVED
+    """
+    NA is not an actual status in the database, which is only used in the code.
+    """
+    NA
+}

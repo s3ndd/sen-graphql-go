@@ -1,0 +1,154 @@
+extend type Mutation{
+    addItems(input: ProcessItemsRequest): EventResponse!
+    removeItems(input: ProcessItemsRequest): EventResponse!
+    replaceItem(input: ReplaceItemRequest): EventResponse!
+}
+
+input ProcessItemsRequest {
+    """
+    id is the unique identifier for the event.
+    """
+    id: ID!
+    """
+    sessionID is the unique identifier for the session associated with the event.
+    """
+    sessionID: ID!
+    """
+    siteID is the unique identifier for the site associated with the event.
+    """
+    siteID: ID!
+    """
+    retailerID is the unique identifier for the retailer associated with the event.
+    """
+    retailerID: ID!
+    """
+    if flagged is true, this event will be flagged for review
+    """
+    flagged: Boolean
+    """
+    if skipped is true, this event will not be processed
+    """
+    skipped: Boolean
+    """
+    items is the list of item objects that needs to be processed in this event
+    """
+    items: [InputItems!]!
+    """
+    if webhookNotify is true, this event will send a processing result and updated session list to configured webhook
+    """
+    webhookNotify: Boolean
+}
+
+input ReplaceItemRequest{
+    """
+    id is the unique identifier for the event.
+    """
+    id: ID!
+    """
+    sessionID is the unique identifier for the session associated with the event.
+    """
+    sessionID: ID!
+    """
+    siteID is the unique identifier for the site associated with the event.
+    """
+    siteID: ID!
+    """
+    retailerID is the unique identifier for the retailer associated with the event.
+    """
+    retailerID: ID!
+    """
+    if flagged is true, this event will be flagged for review
+    """
+    flagged: Boolean
+    """
+    if skipped is true, this event will not be processed
+    """
+    skipped: Boolean
+    """
+    fromItem is the item object that needs to be replaced
+    """
+    fromItem: InputSingleItem!
+    """
+    toItem is the item object that needs to be replaced by
+    """
+    toItem: InputSingleItem!
+    """
+    if webhookNotify is true, this event will send a processing result and updated session list to configured webhook
+    """
+    webhookNotify: Boolean
+}
+
+input InputItems{
+    """
+    productKey is the item barcode
+    """
+    productKey: String!
+    """
+    if labelled is true, this item is a labelled item
+    """
+    labelled: Boolean
+    """
+    discount is the discount code for this item
+    """
+    discount: String
+    """
+    quantity is the quantity of this item
+    """
+    quantity: Int!
+}
+
+input InputSingleItem{
+    """
+    productKey is the item barcode
+    """
+    productKey: String!
+    """
+    if labelled is true, this item is a labelled item
+    """
+    labelled: Boolean
+    """
+    discount is the discount code for this item
+    """
+    discount: String
+}
+
+type EventResponse {
+    id: ID!
+    sessionID: ID!
+    flagged: Boolean
+    skipped: Boolean
+    created: Timestamp!
+    updated: Timestamp!
+}
+
+type ProductKeyList {
+    productKey: String!
+    labelled: Boolean!
+    discount: String
+    quantity: Int!
+}
+
+type Event {
+    id: ID!
+    sessionID: ID!
+    eventType: EventType!
+    eventSubType: EventSubType!
+    productKeyList: [ProductKeyList!]!
+    flagged: Boolean!
+    skipped: Boolean!
+    created: Timestamp!
+    updated: Timestamp!
+}
+
+enum EventType {
+    SHOPPING
+    INFERENCE
+}
+
+enum EventSubType {
+    IN
+    OUT
+    ADD
+    REMOVE
+    REPLACE
+}

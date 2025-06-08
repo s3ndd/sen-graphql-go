@@ -1,0 +1,103 @@
+
+extend type Query {
+    site(retailerID: ID!, id: ID!): Site
+    sites(retailerID: ID!): [Site!]!
+}
+
+type Site {
+    """
+    id is the unique identifier for the site.
+    """
+    id: ID!
+    """
+    name is the site's name.
+    """
+    name: String!
+    """
+    status is the status of the site.
+    """
+    status: SiteStatus!
+    """
+    retailerID is the UUID for the retailer.
+    """
+    retailerID: String!
+    """
+    retailer is the detail of the retailer.
+    """
+    retailer: Retailer
+    """
+    logoURL is the url of the site's logo
+    """
+    logoURL: String
+    """
+    region is the location where the site is.
+    """
+    region: SiteRegion!
+    """
+    currency is the currency supported by the site.
+    """
+    currency: String!
+    """
+    workflowType is the workflow the site is using.
+    """
+    workflowType: String!
+    """
+    integrationType indicates how to integrate with the pos.
+    """
+    integrationType  : String!
+    """
+    alertNotificationType is the type used to notify the alert.
+    """
+    alertNotificationType: String!
+    """
+    alertNotificationURL is the alert notification callback url.
+    """
+    alertNotificationURL:String
+    """
+    created is when the site was created.
+    """
+    created: Timestamp!
+    """
+    updated is when the site was last updated.
+    """
+    updated: Timestamp!
+
+    """
+    sessions is a list of sessions of this site
+    """
+    sessions(status: [SessionStatus!]): SessionConnection!
+    """
+    alerts is a list of alerts of this site
+    """
+    alerts(status: [AlertStatus!], types: [AlertType!]): AlertConnection!
+}
+
+enum SiteStatus {
+    # ActiveSiteStatus indicates the site is active
+    ACTIVE
+}
+
+enum SiteRegion {
+    """
+    ASIA indicates the site is located in Asia
+    """
+    ASIA
+    """
+    AUSTRALIA indicates the site is located in Australia
+    """
+    AUSTRALIA
+    """
+    EUROPE indicates the site is located in Europe
+    """
+    EUROPE
+    """
+    US indicates the site is located in US
+    """
+    US
+}
+
+enum IntegrationType{
+    POS
+    POS_LESS
+    PRODUCT_ONLY
+}

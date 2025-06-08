@@ -1,0 +1,125 @@
+extend type Query {
+    cart(id: ID!): Cart
+    carts(siteID: ID!): CartConnection
+}
+
+type Cart {
+    """
+    id is the unique identifier for the cart.
+    """
+    id: ID!
+    """
+    code is the unique QR code for the cart.
+    """
+    code: String!
+    """
+    name is the name for the cart.
+    """
+    name: String!
+    """
+    status is the status of the cart.
+    """
+    status: CartStatus!
+    """
+    languagePack is the language configured for the cart.
+    """
+    languagePack: String!
+    """
+    softwareVersion is the software version of the cart.
+    """
+    softwareVersion: String
+    """
+    battery is the battery metric of the cart.
+    """
+    batteries: [Battery!]!
+    """
+    temperature is the temperature metric of the cart.
+    """
+    temperatures: [Temperature!]!
+    """
+    wifi is the wifi metric of the cart.
+    """
+    wifis: [Wifi!]!
+    """
+    siteID is the unique identifier for the site where the cart belongs to.
+    """
+    siteID: String!
+    """
+    site is the detail of the site where the cart belongs to.
+    """
+    site: Site!
+    """
+    sessionID is the unique identifier for the session which is associated with the cart.
+    """
+    sessionID: ID
+    """
+    sessionURL is the URL where the events will be sent to.
+    """
+    sessionURL: String
+    """
+    session is the detail of the session which is associated with the cart.
+    """
+    session: Session
+    """
+    sessions is a list of sessions which are associated with the cart.
+    """
+    sessions(status: [SessionStatus!]): [Session!]!
+    """
+    alerts is a list of alerts which are associated with the cart.
+    """
+    alerts(status: [AlertStatus!], types: [AlertType!]): [Alert!]!
+
+    """
+    created is when the session was created.
+    """
+    created: Timestamp!
+    """
+    updated is when the session was last updated.
+    """
+    updated: Timestamp!
+    """
+    deleted indicates whether the cart has been removed or not.
+    """
+    deleted: Timestamp
+}
+
+enum CartStatus {
+    CartState_UNSPECIFIED
+    CartState_SUSPENDED
+    CartState_AVAILABLE
+    CartState_ACTIVE
+    CartState_PAUSED
+}
+
+type CartConnection {
+    carts: [Cart!]!
+#    pageInfo: PageInfo!
+}
+
+
+type Wifi {
+    cartID: ID!
+    wifiIdx: Int!
+    currentRssi: Float!
+    averageRssi: Float!
+    deleted: Timestamp
+}
+
+type Battery {
+    cartID: ID!
+    batteryIdx: Int!
+    charging: Boolean!
+    percentage: Int!
+    cellMillivolts: Int64!
+    inputMillivolts: Int64!
+    temperature: Int64!
+    deleted: Timestamp
+}
+
+type Temperature {
+    cartID: ID!
+    temperatureIdx: Int!
+    measurement: Float!
+    code: String!
+    deleted: Timestamp
+}
